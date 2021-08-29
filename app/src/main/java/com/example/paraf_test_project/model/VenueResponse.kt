@@ -21,15 +21,7 @@ data class Item(
     val venue: Venue? = null
 )
 
-data class Venue(
-    val name: String? = null,
-    val location: Location? = null
-)
 
-data class Location(
-    val lat: Double? = null,
-    val lng: Double? = null,
-    val distance: Long? = null
-)
+
 
 

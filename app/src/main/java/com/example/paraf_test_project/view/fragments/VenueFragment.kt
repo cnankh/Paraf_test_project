@@ -38,7 +38,7 @@ class VenueFragment : Fragment(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         val ll = "${location.latitude},${location.longitude}"
-        viewModel.fetch(ll)
+        viewModel.fetch(ll, true)
     }
 
 }
