@@ -1,4 +1,4 @@
-package com.example.paraf_test_project.services
+package com.example.paraf_test_project.services.api
 
 import com.example.paraf_test_project.model.VenueResponse
 import io.reactivex.Single

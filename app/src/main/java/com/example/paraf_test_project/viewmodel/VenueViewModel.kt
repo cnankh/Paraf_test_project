@@ -1,9 +1,10 @@
 package com.example.paraf_test_project.viewmodel
 
+import android.annotation.SuppressLint
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.paraf_test_project.model.Group
 import com.example.paraf_test_project.model.Item
 import com.example.paraf_test_project.model.VenueResponse
 import com.example.paraf_test_project.services.FoursquareApiService
@@ -14,13 +15,9 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 
 
-class VenueViewModel : ViewModel() {
-    /**
-     * latitude and longitude of user's current position
-     * --WARNING-- this should be replaced by real values later
-     */
-    private val ll: String = "36.308895,59.512478"
-
+@SuppressLint("StaticFieldLeak")
+class VenueViewModel(application: Application) : AndroidViewModel(application) {
+    private val context = getApplication<Application>().applicationContext
     /**
      * the maximum number of discovered venue
      */
@@ -38,10 +35,10 @@ class VenueViewModel : ViewModel() {
     /**
      * send request to the server to retrieve the near venues
      */
-    fun fetch() {
-
+    fun fetch(coordinates: String?) {
+        Log.d("TAG viewModel:", coordinates.toString())
         disposable.add(
-            service.getVenues(ll, limit, radius)
+            service.getVenues(coordinates!!, limit, radius)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object :
@@ -58,8 +55,10 @@ class VenueViewModel : ViewModel() {
 
                 })
         )
+
     }
 
+    private fun fetchFromRemote(coordinates: String?) {}
 }
 
 

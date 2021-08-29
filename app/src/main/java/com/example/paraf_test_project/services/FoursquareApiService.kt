@@ -1,6 +1,7 @@
 package com.example.paraf_test_project.services
 
 import com.example.paraf_test_project.model.VenueResponse
+import com.example.paraf_test_project.services.api.VenueApi
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.Retrofit
