@@ -11,7 +11,10 @@
         tools:layout="@layout/venue_fragment" >
         <action
             android:id="@+id/action_venueFragment_to_venueDetailsFragment"
-            app:destination="@id/venueDetailsFragment" />
+            app:destination="@id/venueDetailsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/venueDetailsFragment"

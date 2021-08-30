@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
             android:fontFamily="@font/iransansmobilelight"
-            android:text="@{String.valueOf(venue.location.distance)}"
+            android:text="@{String.valueOf(venue.location.distance) + ` m`}"
             android:textColor="@color/gray_800"
             app:layout_constraintBottom_toBottomOf="@id/left_container"
             app:layout_constraintEnd_toEndOf="parent"
