@@ -20,10 +20,24 @@ data class Venue(
 @Entity
 data class Location(
     @ColumnInfo(name = "lat")
-    val lat: Double? = null,
+    var lat: Double? = null,
+
     @ColumnInfo(name = "lng")
-    val lng: Double? = null,
+    var lng: Double? = null,
+
     @ColumnInfo(name = "distance")
-    val distance: Long? = null
+    var distance: Long? = null,
+
+    @ColumnInfo(name = "address")
+    var address : String? = null,
+
+    @ColumnInfo(name = "city")
+    var city : String? = null,
+
+    @ColumnInfo(name = "state")
+    var state : String? = null,
+
+    @ColumnInfo(name = "country")
+    var country : String? = null,
 )
 
