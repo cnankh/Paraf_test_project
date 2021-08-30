@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.paraf_test_project.R
 import com.example.paraf_test_project.databinding.VenueItemBinding
 import com.example.paraf_test_project.model.Venue
+import com.example.paraf_test_project.view.fragments.VenueFragmentDirections
+import com.example.paraf_test_project.view.interfaces.VenueClickListener
+import kotlinx.android.synthetic.main.venue_item.view.*
 
 class VenueAdapter(val list: ArrayList<Venue>) :
-    RecyclerView.Adapter<VenueAdapter.CustomViewHolder>() {
+    RecyclerView.Adapter<VenueAdapter.CustomViewHolder>(), VenueClickListener {
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(newList: List<Venue>) {
@@ -34,9 +37,17 @@ class VenueAdapter(val list: ArrayList<Venue>) :
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.view.venue = list[position]
-//        holder.view.listener = this
+        holder.view.listener = this
 
     }
+
     override fun getItemCount() = list.size
+
+    override fun onCLick(view: View) {
+        val uuid = view.uuid_container.text.toString().toInt()
+        val action = VenueFragmentDirections.actionVenueFragmentToVenueDetailsFragment()
+        action.uuid = uuid
+        Navigation.findNavController(view).navigate(action)
+    }
 
 }

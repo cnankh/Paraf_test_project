@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginVertical="@dimen/_25sdp">
+        android:layout_marginVertical="@dimen/_25sdp"
+        android:onClick="@{listener::onCLick}">
 
         <LinearLayout
             android:id="@+id/left_container"
@@ -61,6 +62,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/left_container" />
 
+        <TextView
+            android:id="@+id/uuid_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@{String.valueOf(venue.uuid)}"
+            android:visibility="gone"
+            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -69,5 +78,9 @@
         <variable
             name="venue"
             type="com.example.paraf_test_project.model.Venue" />
+
+        <variable
+            name="listener"
+            type="com.example.paraf_test_project.view.interfaces.VenueClickListener" />
     </data>
 </layout>

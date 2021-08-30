@@ -17,5 +17,10 @@
         android:id="@+id/venueDetailsFragment"
         android:name="com.example.paraf_test_project.view.fragments.VenueDetailsFragment"
         android:label="venue_details_fragment"
-        tools:layout="@layout/venue_details_fragment" />
+        tools:layout="@layout/venue_details_fragment" >
+        <argument
+            android:name="uuid"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 </navigation>
