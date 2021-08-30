@@ -9,8 +9,8 @@ import androidx.room.TypeConverters
 data class Venue(
     @ColumnInfo(name = "name")
     var name: String? = null,
-//    @ColumnInfo(name = "location")
-//    var location: Location? = null
+    @ColumnInfo(name = "location")
+    var location: Location? = null
 ) {
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
