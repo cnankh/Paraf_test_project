@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Paraf_test_project</string>
+    <string name="location_icon">location icon</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.paraf_test_project.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import android.widget.Toast
@@ -18,13 +19,14 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 @SuppressLint("StaticFieldLeak")
 class VenueViewModel(application: Application) : BaseViewModel(application) {
     private final val TAG = "tag-venueViewModel: "
     private val context = getApplication<Application>().applicationContext
-
     private val prefHelper = SharedPreferencesHelper.buildHelper(context)
     private var previousLatitude: Float? = prefHelper.getPreviousLatitude()
     private var previousLongitude: Float? = prefHelper.getPreviousLongitude()
@@ -35,7 +37,7 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
      */
     private final val DISTANCE_LIMIT = 500.0
 
-    private val venuesList = MutableLiveData<List<Venue>>()
+    val venuesList = MutableLiveData<List<Venue>>()
 
     /**
      * the maximum number of discovered venue
