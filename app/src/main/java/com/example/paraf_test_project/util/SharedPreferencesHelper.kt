@@ -7,6 +7,9 @@ import androidx.preference.PreferenceManager
 
 class SharedPreferencesHelper {
 
+    private final val LATITUDE = "latitude"
+    private final val LONGITUDE = "longitude"
+
     companion object {
 
         private var prefs: SharedPreferences? = null
@@ -25,6 +28,26 @@ class SharedPreferencesHelper {
             prefs = PreferenceManager.getDefaultSharedPreferences(context)
             return SharedPreferencesHelper()
         }
+    }
+
+    fun setLatitude(latitude: Float) {
+        prefs?.edit(commit = true) {
+            putFloat(LATITUDE, latitude)
+        }
+    }
+
+    fun getPreviousLatitude(): Float? {
+        return prefs?.getFloat(LATITUDE, 0.0f)
+    }
+
+    fun setLongitude(longitude: Float) {
+        prefs?.edit(commit = true) {
+            putFloat(LONGITUDE, longitude)
+        }
+    }
+
+    fun getPreviousLongitude(): Float? {
+        return prefs?.getFloat(LONGITUDE, 0.0F)
     }
 
 }

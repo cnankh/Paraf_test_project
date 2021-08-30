@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.paraf_test_project.services.LocationService
 import com.example.paraf_test_project.R
+import com.example.paraf_test_project.util.SharedPreferencesHelper
 import com.example.paraf_test_project.viewmodel.VenueViewModel
 
 class VenueFragment : Fragment(), LocationListener {
@@ -38,7 +39,11 @@ class VenueFragment : Fragment(), LocationListener {
 
     override fun onLocationChanged(location: Location) {
         val ll = "${location.latitude},${location.longitude}"
-        viewModel.fetch(ll, true)
+        viewModel.fetch(
+            location.latitude,
+            location.longitude,
+        )
+//        viewModel.getDistance(location.latitude,location.longitude)
     }
 
 }

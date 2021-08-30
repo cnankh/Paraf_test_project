@@ -36,7 +36,7 @@ class LocationService(val context: Activity) {
                 locationPermissionCode
             )
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, listener)
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 500f, listener)
     }
 }
 
