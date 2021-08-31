@@ -1,8 +1,11 @@
 package com.example.paraf_test_project.view.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.location.Location
 import android.location.LocationListener
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -82,9 +85,7 @@ class VenueFragment : Fragment(), LocationListener {
             location.latitude,
             location.longitude,
         )
-        location.latitude.let {
-            userViewModel.getAddress(location.latitude, location.longitude)
-        }
+        userViewModel.getAddress(location.latitude, location.longitude)
 
         Log.d("tag provider", location.provider)
     }
