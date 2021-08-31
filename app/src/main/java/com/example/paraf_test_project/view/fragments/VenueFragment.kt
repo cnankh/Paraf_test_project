@@ -28,6 +28,7 @@ import com.example.paraf_test_project.viewmodel.VenueViewModel
 import kotlinx.android.synthetic.main.venue_fragment.*
 import androidx.core.content.ContextCompat.getSystemService
 import java.io.IOException
+import kotlin.concurrent.thread
 
 
 class VenueFragment : Fragment(), LocationListener {
@@ -43,6 +44,8 @@ class VenueFragment : Fragment(), LocationListener {
 
     private lateinit var locationService: LocationService;
 
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,10 +67,7 @@ class VenueFragment : Fragment(), LocationListener {
 
         mLayoutManager = LinearLayoutManager(context)
 
-        recycler_view.apply {
-            adapter = mAdapter
-            layoutManager = mLayoutManager
-        }
+        configureViews()
         observerViewModel()
     }
 
@@ -97,11 +97,30 @@ class VenueFragment : Fragment(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
+        latitude = location.latitude
+        longitude = location.longitude
+        Log.d("imtesting","fetching")
         venueViewModel.fetch(
-            location.latitude,
-            location.longitude,
+            latitude,
+            longitude,
         )
-        userViewModel.getAddress(location.latitude, location.longitude)
+        userViewModel.getAddress(latitude, longitude)
+    }
+
+    private fun configureViews() {
+        recycler_view.apply {
+            adapter = mAdapter
+            layoutManager = mLayoutManager
+        }
+
+        refreshLayout.setOnRefreshListener {
+
+            val coordinates = "${latitude},${longitude}"
+            venueViewModel.fetchFromRemote(coordinates)
+            refreshLayout.isRefreshing = false
+
+
+        }
     }
 
     override fun onDestroy() {

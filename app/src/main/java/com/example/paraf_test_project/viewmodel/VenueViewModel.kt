@@ -109,7 +109,7 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
      * send request to the server to get the venues
      * @param coordinates : String
      */
-    private fun fetchFromRemote(coordinates: String) {
+     fun fetchFromRemote(coordinates: String) {
 
         Log.d(TAG, "fetch from remote")
 

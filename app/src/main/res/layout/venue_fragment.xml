@@ -1,113 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/ghost_white"
         tools:context=".view.fragments.VenueFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/top_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
+            android:layout_height="match_parent"
             android:background="@color/ghost_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            tools:context=".view.fragments.VenueFragment">
 
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="@dimen/_75sdp"
-                android:layout_height="@dimen/_75sdp"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:src="@drawable/ic_profile_user"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/top_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:background="@color/ghost_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/current_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:fontFamily="@font/iransansmobilemedium"
-                android:text="موقعیت فعلی شما : "
-                android:textColor="@color/gray_800"
-                app:layout_constraintEnd_toEndOf="@id/avatar"
-                app:layout_constraintStart_toStartOf="@id/avatar"
-                app:layout_constraintTop_toBottomOf="@id/avatar" />
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="@dimen/_75sdp"
+                    android:layout_height="@dimen/_75sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:src="@drawable/ic_profile_user"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/current_address"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:fontFamily="@font/iransansmobilebold"
-                android:maxLines="2"
-                android:text="@{user.currentAddress}"
-                android:textAlignment="center"
-                android:textColor="@color/gray_1000"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/current_location" />
+                <TextView
+                    android:id="@+id/current_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:fontFamily="@font/iransansmobilemedium"
+                    android:text="موقعیت فعلی شما : "
+                    android:textColor="@color/gray_800"
+                    app:layout_constraintEnd_toEndOf="@id/avatar"
+                    app:layout_constraintStart_toStartOf="@id/avatar"
+                    app:layout_constraintTop_toBottomOf="@id/avatar" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/current_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/iransansmobilebold"
+                    android:maxLines="2"
+                    android:text="@{user.currentAddress}"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray_1000"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/current_location" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/curved_container"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_container">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="1dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/nothing_found"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="1dp"
-                android:fontFamily="@font/iransansmobilebold"
-                android:text="چیزی یافت نشد :("
-                android:textSize="@dimen/_16ssp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:background="@color/white"
-                android:fadeScrollbars="true"
-                android:fadingEdge="vertical"
-                android:fadingEdgeLength="@dimen/_30sdp"
-                android:overScrollMode="never"
-                android:requiresFadingEdge="vertical"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@drawable/curved_container"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/top_container">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="1dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/nothing_found"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="1dp"
+                    android:fontFamily="@font/iransansmobilebold"
+                    android:text="چیزی یافت نشد :("
+                    android:textSize="@dimen/_16ssp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:background="@color/white"
+                    android:fadeScrollbars="true"
+                    android:fadingEdge="vertical"
+                    android:fadingEdgeLength="@dimen/_30sdp"
+                    android:overScrollMode="never"
+                    android:requiresFadingEdge="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <data>
 
