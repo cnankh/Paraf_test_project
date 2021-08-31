@@ -19,6 +19,7 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -31,6 +32,7 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
     private var previousLatitude: Float? = prefHelper.getPreviousLatitude()
     private var previousLongitude: Float? = prefHelper.getPreviousLongitude()
     private lateinit var coordinates: String
+    val loading = MutableLiveData<Boolean>()
 
     /**
      * set the minimum required distance to fetch from remote
@@ -114,6 +116,8 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
     private fun fetchFromRemote(coordinates: String) {
         Toast.makeText(context, "fetch from remote", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "fetch from remote")
+
+        loading.value = true
         disposable.add(
             service.getVenues(coordinates, limit, radius)
                 .subscribeOn(Schedulers.newThread())
@@ -121,6 +125,7 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
                 .subscribeWith(object :
                     DisposableSingleObserver<retrofit2.Response<VenueResponse>>() {
                     override fun onSuccess(t: Response<VenueResponse>) {
+                        loading.value = false
                         venueResponse = t.body()!!
                         items.value = venueResponse.response?.group?.get(0)?.item!!
                         separateVenuesFromItem(items.value!!)
@@ -129,12 +134,14 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
                     }
 
                     override fun onError(e: Throwable) {
+                        loading.value = false
                         Log.e(TAG, e.message.toString())
                         Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
                     }
 
                 })
         )
+
     }
 
     /**

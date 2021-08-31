@@ -6,12 +6,14 @@ import android.location.Location
 import android.location.LocationListener
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +26,9 @@ import com.example.paraf_test_project.view.adapters.VenueAdapter
 import com.example.paraf_test_project.viewmodel.UserViewModel
 import com.example.paraf_test_project.viewmodel.VenueViewModel
 import kotlinx.android.synthetic.main.venue_fragment.*
+import androidx.core.content.ContextCompat.getSystemService
+import java.io.IOException
+
 
 class VenueFragment : Fragment(), LocationListener {
 
@@ -67,8 +72,16 @@ class VenueFragment : Fragment(), LocationListener {
         venueViewModel.venuesList.observe(viewLifecycleOwner, Observer { venues ->
             venues?.let {
                 mAdapter.updateList(venues)
+                nothing_found.visibility = if (venues.isNullOrEmpty()) View.VISIBLE else View.GONE
             }
 
+        })
+
+        venueViewModel.loading.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                progress_bar.visibility = if (it) View.VISIBLE else View.GONE
+                recycler_view.visibility = if (it) View.GONE else View.VISIBLE
+            }
         })
 
         userViewModel.user.observe(viewLifecycleOwner, Observer {
@@ -76,6 +89,7 @@ class VenueFragment : Fragment(), LocationListener {
                 binding.user = user
             }
         })
+
 
     }
 
@@ -89,5 +103,4 @@ class VenueFragment : Fragment(), LocationListener {
 
         Log.d("tag provider", location.provider)
     }
-
 }
