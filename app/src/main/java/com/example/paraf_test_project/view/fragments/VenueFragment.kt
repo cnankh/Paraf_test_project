@@ -38,7 +38,8 @@ class VenueFragment : Fragment(), LocationListener {
 
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
 
-    private lateinit var binding: VenueFragmentBinding
+    private var _binding: VenueFragmentBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var locationService: LocationService;
 
@@ -47,8 +48,7 @@ class VenueFragment : Fragment(), LocationListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.venue_fragment, container, false)
-
+        _binding = DataBindingUtil.inflate(inflater, R.layout.venue_fragment, container, false)
         return binding.root
     }
 
@@ -102,5 +102,10 @@ class VenueFragment : Fragment(), LocationListener {
             location.longitude,
         )
         userViewModel.getAddress(location.latitude, location.longitude)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -4,19 +4,22 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.location.Geocoder
+import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.paraf_test_project.model.User
+import com.example.paraf_test_project.services.LocationService
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.*
+import kotlin.concurrent.thread
 
 class UserViewModel(application: Application) : BaseViewModel(application) {
     private final val TAG = "tag-userViewModel: "
 
     @SuppressLint("StaticFieldLeak")
     private val context = getApplication<Application>().applicationContext
-    private lateinit var geocoder: Geocoder
+    private val location = LocationService(context)
     val user = MutableLiveData<User>()
 
     /**
@@ -24,20 +27,13 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
      */
     fun getAddress(latitude: Double, longitude: Double) {
 
-        launch {
-            geocoder = Geocoder(context, Locale.getDefault())
-
+        thread {
             try {
-                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-                val address = addresses[0].getAddressLine(0)
-
-                val _user = User(address)
-
-                user.value = _user
+                val _user = User(location.getAddress(latitude, longitude))
+                user.postValue(_user)
             } catch (e: IOException) {
                 Log.e(TAG, e.message.toString())
             }
-
 
         }
     }

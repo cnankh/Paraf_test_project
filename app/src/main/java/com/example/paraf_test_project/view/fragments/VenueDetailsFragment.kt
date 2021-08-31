@@ -16,13 +16,14 @@ class VenueDetailsFragment : Fragment() {
 
     private lateinit var viewModel: VenueDetailsViewModel
     private var uuid: Int = 0
-    private lateinit var binding: VenueDetailsFragmentBinding
+    private var _binding: VenueDetailsFragmentBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(inflater, R.layout.venue_details_fragment, container, false)
         return binding.root
     }
@@ -47,4 +48,8 @@ class VenueDetailsFragment : Fragment() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
