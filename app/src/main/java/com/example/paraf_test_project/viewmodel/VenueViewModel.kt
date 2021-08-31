@@ -69,7 +69,8 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
          * prev position , then fetch from database , otherwise fetch from remote
          */
         if (getDistance(latitude, longitude) < DISTANCE_LIMIT) {
-            fetchFromDatabase()
+            if (venuesList.value.isNullOrEmpty())
+                fetchFromDatabase()
             return
         }
         fetchFromRemote(coordinates)
@@ -102,7 +103,8 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
         for (item in list) {
             item.venue?.let { _venueList.add(it) }
         }
-        venuesList.value = _venueList
+
+        venuesRetrieved(_venueList)
     }
 
     /**
@@ -181,7 +183,12 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun venuesRetrieved(list: List<Venue>) {
+
+        Toast.makeText(context, "wtf is happening????", Toast.LENGTH_SHORT).show();
         venuesList.value = list
+//            return
+
+//        Toast.makeText(context, "no need to update list", Toast.LENGTH_SHORT).show();
     }
 
     /**
