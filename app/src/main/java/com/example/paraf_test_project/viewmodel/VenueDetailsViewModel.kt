@@ -14,6 +14,10 @@ class VenueDetailsViewModel(application: Application) : BaseViewModel(applicatio
         fetchFromDatabase(uuid)
     }
 
+    /**
+     * fetch clicked venue with its uuid
+     * @param uuid : int
+     */
     private fun fetchFromDatabase(uuid: Int) {
         launch {
             val dao = VenueDatabase(getApplication()).venueDao()

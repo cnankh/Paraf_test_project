@@ -16,14 +16,14 @@ class FoursquareApiService {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
         .create(VenueApi::class.java)
+
     /**
      * @param ll string - latitude and longitude of user's current position
-     * @param limit Int - maximum number of discovered places
      * @param radius Int - Radius to search within, in meters
      * @return Single<Response<VenueResponse>>
      */
-    fun getVenues(ll: String, limit: Int, radius: Int): Single<Response<VenueResponse>> {
-        return api.getVenues(ll, limit, radius)
+    fun getVenues(ll: String, radius: Int): Single<Response<VenueResponse>> {
+        return api.getVenues(ll, radius)
     }
 
 }

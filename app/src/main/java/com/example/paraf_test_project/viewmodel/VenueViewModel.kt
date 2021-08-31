@@ -2,7 +2,6 @@ package com.example.paraf_test_project.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import android.widget.Toast
@@ -19,14 +18,13 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 @SuppressLint("StaticFieldLeak")
 class VenueViewModel(application: Application) : BaseViewModel(application) {
-    private final val TAG = "tag-venueViewModel: "
+    private val TAG = "tag-venueViewModel: "
     private val context = getApplication<Application>().applicationContext
     private val prefHelper = SharedPreferencesHelper.buildHelper(context)
     private var previousLatitude: Float? = prefHelper.getPreviousLatitude()
@@ -34,17 +32,13 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
     private lateinit var coordinates: String
     val loading = MutableLiveData<Boolean>()
 
+
     /**
      * set the minimum required distance to fetch from remote
      */
     private final val DISTANCE_LIMIT = 500.0
 
     val venuesList = MutableLiveData<List<Venue>>()
-
-    /**
-     * the maximum number of discovered venue
-     */
-    private val limit: Int = 10
 
     // meters
     private val radius: Int = 3000
@@ -60,7 +54,9 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
     private val items = MutableLiveData<List<Item>>()
 
     /**
-     * send request to the server to retrieve the near venues
+     * fetch venues from database or remote
+     * @param latitude: Double
+     * @param longitude: Double
      */
     fun fetch(latitude: Double, longitude: Double) {
         coordinates = "${latitude},${longitude}"
@@ -114,12 +110,12 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
      * @param coordinates : String
      */
     private fun fetchFromRemote(coordinates: String) {
-        Toast.makeText(context, "fetch from remote", Toast.LENGTH_SHORT).show();
+
         Log.d(TAG, "fetch from remote")
 
         loading.value = true
         disposable.add(
-            service.getVenues(coordinates, limit, radius)
+            service.getVenues(coordinates, radius)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object :
@@ -151,7 +147,6 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
     private fun storeVenuesLocally(list: List<Venue>) {
 
         launch {
-            Toast.makeText(context, "store in db", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "store in db")
             val dao = VenueDatabase(getApplication()).venueDao()
             dao.deleteAllVenues()
@@ -172,7 +167,6 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
      */
     private fun fetchFromDatabase() {
         launch {
-            Toast.makeText(context, "fetch from db", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "fetch from db")
             val venues = VenueDatabase(getApplication()).venueDao().getAllVenues()
 
@@ -189,25 +183,21 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    /**
+     * update venueList.value
+     * @param list : List<Venue>
+     */
     private fun venuesRetrieved(list: List<Venue>) {
-
-        Toast.makeText(context, "wtf is happening????", Toast.LENGTH_SHORT).show();
         venuesList.value = list
-//            return
-
-//        Toast.makeText(context, "no need to update list", Toast.LENGTH_SHORT).show();
     }
 
     /**
      * calculate the distance between currentPosition and previousPosition
      * @param currentLatitude : Double
      * @param currentLongitude : Double
+     * @return float
      */
     private fun getDistance(currentLatitude: Double, currentLongitude: Double): Float {
-        val tag = "distance"
-        Log.d(tag, "prev : ${previousLatitude},${previousLongitude}")
-        Log.d(tag, "new : ${currentLatitude},${currentLongitude}")
-
         val startPoint = Location("A")
         startPoint.latitude = previousLatitude!!.toDouble()
         startPoint.longitude = previousLongitude!!.toDouble()
@@ -215,10 +205,8 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
         val endPoint = Location("b")
         endPoint.latitude = currentLatitude
         endPoint.longitude = currentLongitude
-        val distance = startPoint.distanceTo(endPoint)
-        Log.d(tag, "distance $distance")
 
-        return distance
+        return startPoint.distanceTo(endPoint)
     }
 }
 

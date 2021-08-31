@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.MutableLiveData
+import java.io.IOException
 
 class LocationService(val context: Activity) {
     private lateinit var locationManager: LocationManager
@@ -36,7 +37,9 @@ class LocationService(val context: Activity) {
                 locationPermissionCode
             )
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 500f, listener)
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 200f, listener)
+        
     }
 }
 

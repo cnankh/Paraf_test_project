@@ -17,10 +17,11 @@ class VenueDetailsFragment : Fragment() {
     private lateinit var viewModel: VenueDetailsViewModel
     private var uuid: Int = 0
     private lateinit var binding: VenueDetailsFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.venue_details_fragment, container, false)
         return binding.root

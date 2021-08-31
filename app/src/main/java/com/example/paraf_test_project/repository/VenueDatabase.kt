@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.paraf_test_project.model.Venue
 import com.example.paraf_test_project.repository.converters.LocationConverter
 
-@Database(entities = arrayOf(Venue::class), version = 1)
+@Database(entities = [Venue::class], version = 1)
 @TypeConverters(LocationConverter::class)
 abstract class VenueDatabase : RoomDatabase() {
     abstract fun venueDao(): VenueDao

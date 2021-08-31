@@ -35,16 +35,18 @@ class VenueFragment : Fragment(), LocationListener {
     private lateinit var venueViewModel: VenueViewModel
     private lateinit var userViewModel: UserViewModel
     private var mAdapter = VenueAdapter(arrayListOf())
+
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
+
     private lateinit var binding: VenueFragmentBinding
-    private val locationPermissionCode = 2
+
     private lateinit var locationService: LocationService;
-    private var coordination: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.venue_fragment, container, false)
 
         return binding.root
@@ -56,6 +58,7 @@ class VenueFragment : Fragment(), LocationListener {
         locationService = LocationService(context as Activity)
         venueViewModel = ViewModelProvider(this)[VenueViewModel::class.java]
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
 
         locationService.getLocation(this)
 
@@ -94,13 +97,10 @@ class VenueFragment : Fragment(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-        val ll = "${location.latitude},${location.longitude}"
         venueViewModel.fetch(
             location.latitude,
             location.longitude,
         )
         userViewModel.getAddress(location.latitude, location.longitude)
-
-        Log.d("tag provider", location.provider)
     }
 }

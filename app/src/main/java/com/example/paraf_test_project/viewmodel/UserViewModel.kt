@@ -33,10 +33,9 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
 
                 val _user = User(address)
 
-                Log.d(TAG, addresses.toString())
                 user.value = _user
             } catch (e: IOException) {
-
+                Log.e(TAG, e.message.toString())
             }
 
 

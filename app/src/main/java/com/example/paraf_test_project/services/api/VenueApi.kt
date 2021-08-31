@@ -11,10 +11,9 @@ interface VenueApi {
      * Venue Recommendations
      * GET v2/venues/explore
      */
-    @GET("v2/venues/explore?client_id=3ZHVETCQZV3XKIEFADUGKXEPCS1IMPDC32JJJXRDHQO3QGTK&client_secret=XIEIVCNH4NDYXDGMEM101P2RC2Y2N2NEWSMHPUL0FWVX4IX5&v=220120609&query=pizza")
+    @GET("v2/venues/explore?client_id=3ZHVETCQZV3XKIEFADUGKXEPCS1IMPDC32JJJXRDHQO3QGTK&client_secret=XIEIVCNH4NDYXDGMEM101P2RC2Y2N2NEWSMHPUL0FWVX4IX5&v=220120609")
     fun getVenues(
         @Query("ll") ll: String,
-        @Query("limit") limit: Int,
         @Query("radius") radius: Int,
     ): Single<Response<VenueResponse>>
 }
