@@ -122,11 +122,13 @@ class VenueViewModel(application: Application) : BaseViewModel(application) {
                     DisposableSingleObserver<retrofit2.Response<VenueResponse>>() {
                     override fun onSuccess(t: Response<VenueResponse>) {
                         loading.value = false
-                        venueResponse = t.body()!!
-                        items.value = venueResponse.response?.group?.get(0)?.item!!
-                        separateVenuesFromItem(items.value!!)
-                        storeVenuesLocally(venuesList.value as ArrayList<Venue>)
-                        Log.d(TAG, venuesList.value.toString())
+                        t.body()?.let {
+                            venueResponse = t.body()!!
+                            items.value = venueResponse.response?.group?.get(0)?.item!!
+                            separateVenuesFromItem(items.value!!)
+                            storeVenuesLocally(venuesList.value as ArrayList<Venue>)
+                            Log.d(TAG, venuesList.value.toString())
+                        }
                     }
 
                     override fun onError(e: Throwable) {
