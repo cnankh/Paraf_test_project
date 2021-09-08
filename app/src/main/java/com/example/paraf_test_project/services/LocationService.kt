@@ -31,7 +31,15 @@ class LocationService(val context: Context) {
             )
         }
 
+        //for latest android versions
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 200f, listener)
+        //for older android versions
+        locationManager.requestLocationUpdates(
+            LocationManager.NETWORK_PROVIDER,
+            5000,
+            200f,
+            listener
+        )
 
     }
 
@@ -39,5 +47,6 @@ class LocationService(val context: Context) {
         val addresses = geocoder.getFromLocation(latitude, longitude, 1)
         return addresses[0].getAddressLine(0)
     }
+
 }
 
